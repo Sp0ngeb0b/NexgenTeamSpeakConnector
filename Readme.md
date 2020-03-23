@@ -4,7 +4,7 @@
 ![previewMulti](https://user-images.githubusercontent.com/12958319/77364286-7c669700-6d54-11ea-8d0f-e9c6ae566135.jpg)
 ![previewHUD](https://user-images.githubusercontent.com/12958319/77364294-7e305a80-6d54-11ea-8a7d-802a45f5be9e.jpg)
 
-
+```
 ####################################################################################################
 ##
 ##  Nexgen Teamspeak 3 Connector - NTSC
@@ -235,40 +235,40 @@ Single channel mode:
 Multi channel mode, 1 gameserver, no default channel:
 - Entry hall (players will be moved)
 - Gameserver
-  ° Mixed Channel
-  ° Red Team
-  ° Blue Team
-  ° Spectators
-  ° Disconnected Player
+  Â° Mixed Channel
+  Â° Red Team
+  Â° Blue Team
+  Â° Spectators
+  Â° Disconnected Player
 - Other Channel (players will be moved)
 - Another Channel (players will be moved)
 
 Multi channel mode, 1 gameserver, with default channel:
 - Entry Hall (players will NOT be moved)
 - Gameserver (default connection channel, players will be moved)
-  ° Mixed Channel
-  ° Red Team
-  ° Blue Team
-  ° Spectators
-  ° Disconnected Player
+  Â° Mixed Channel
+  Â° Red Team
+  Â° Blue Team
+  Â° Spectators
+  Â° Disconnected Player
 - Other Channel (players will NOT be moved)
 - Another Channel (players will NOT be moved)
 
 Multi channel mode, multiple gameserver, default channels are required:
 - Entry Hall
 - Gameserver 1 (default connection channel for this gameserver)
-  ° Mixed Channel
-  ° Red Team
-  ° Blue Team
-  ° Spectators
-  ° Disconnected Player
+  Â° Mixed Channel
+  Â° Red Team
+  Â° Blue Team
+  Â° Spectators
+  Â° Disconnected Player
 - Other Channel
 - Gameserver 2 (default connection channel for this gameserver)
-  ° Mixed Channel
-  ° Red Team
-  ° Blue Team
-  ° Spectators
-  ° Disconnected Player
+  Â° Mixed Channel
+  Â° Red Team
+  Â° Blue Team
+  Â° Spectators
+  Â° Disconnected Player
 
 ####################################################################################################
 ##
@@ -447,9 +447,7 @@ Sp0ngeb0b, December 2019
 
 admin@unrealriders.eu / spongebobut@yahoo.com
 www.unrealriders.eu
-
-
-
+```
 
 
 
