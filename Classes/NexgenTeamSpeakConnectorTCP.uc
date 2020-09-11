@@ -1,7 +1,7 @@
 /*##################################################################################################
 ##
-##  Nexgen Teamspeak 3 Connector version 2.00
-##  Copyright (C) 2019 Patrick "Sp0ngeb0b" Peltzer
+##  Nexgen Teamspeak 3 Connector version 2.01
+##  Copyright (C) 2020 Patrick "Sp0ngeb0b" Peltzer
 ##
 ##  This program is free software; you can redistribute and/or modify
 ##  it under the terms of the Open Unreal Mod License version 1.1.
@@ -147,9 +147,9 @@ event ReceivedLine(string Line) {
     outputLog(0, "Adjust the permissions for the TeamSpeak Server account "$NexgenTeamSpeakConnectorConfig(xControl.xConf).TSusername$" or use a different account.");
     Close();
   } else if(bHandshake) {
-    if(InStr(Line, "Welcome to the TeamSpeak 3 ServerQuery interface") != -1) {
+    if(InStr(Line, "TeamSpeak 3 ServerQuery interface") != -1 || InStr(Line, "TeaSpeak ServerQuery interface") != -1) {
       Handshaken();
-    } else if(InStr(Line, "TS3") != -1) return;
+    } else if(InStr(Line, "TS3") != -1 || InStr(Line, "TeaSpeak") != -1) return;
     else {
       outputLog(2, "Handshake failed! Received data:"@line);
       outputLog(0, "Make sure you are using the right server adress and ports!");
@@ -182,7 +182,8 @@ event ReceivedLine(string Line) {
     fetchedLine = fetchedLine$Line;
     if(InStr(Line, "msg=ok") != -1) {
       for(currChannel=0; currChannel<channelAmount; currChannel++) {
-        tempCID = getCIDCLID(0, fetchedLine, xControl.ChannelName(currChannel));
+	    outputLog(1, "Searching for '"$xControl.ChannelName(currChannel)$"' in received line: "@fetchedLine);
+        tempCID = getCID(fetchedLine, xControl.ChannelName(currChannel));
         if(tempCID > 0) channelIDs[currChannel] = tempCID;
         else if(tempCID == -1) outputLog(2, "Channel ID: "$currChannel$", Name: "$xControl.ChannelName(currChannel)$" not found!");
       }
@@ -458,24 +459,23 @@ function outputLog(int logType, string logMsg) {
 
 /***************************************************************************************************
  *
- *  $DESCRIPTION  Finds the belonging CLID for the client.
+ *  $DESCRIPTION  Finds the belonging CID for a specific channel.
  *  $PARAM Line The result output of the TS server.
- *  $PARAM xClient The client we are looking for.
- *  $RETURN The specific CLID.
+ *  $PARAM channelName The channel we are looking for.
+ *  $RETURN The specific CID.
  *
  **************************************************************************************************/
-function int getCIDCLID(int mode, string Line, string compareString) {
+function int getCID(string Line, string channelName) {
   local string results[128];
-  local string remaining, namestring;
-  local string searchString1, searchString2, searchString3, searchString4, searchString5;
+  local string remaining, namestring, CIDString;
   local int pos, currResult;
   local int i;
-  local int firstFound, specialChannel;
   
-  if(compareString == "") return -1;
+  if(channelName == "") return -1;
 
   remaining = Line;
 
+  // Split up result into temporary array
   while(remaining != "" && currResult < ArrayCount(results)) {
     pos = InStr(remaining, "|");
     if(pos != -1) {
@@ -485,47 +485,22 @@ function int getCIDCLID(int mode, string Line, string compareString) {
       results[currResult] = remaining;
       remaining = "";
     }
+	outputLog(1, "results["$currResult$"]="$results[currResult]);
     currResult++;
   }
-  
-  switch(mode) {
-    case 0:
-      searchString1 = " channel_name=";
-      searchString2 = "cid=";
-      searchString3 = " total_clients=";
-      searchString4 = " channel_order=";
-      searchString5 = " pid=";
-    break;
-    case 1:
-      searchString1 = " client_nickname=";
-      searchString2 = "clid=";
-      searchString3 = " client_type=";
-      searchString4 = " client_database_id=";
-      searchString5 = " cid=";
-    break;
-  }
-  
-  firstFound = -1;
 
-  for(i=0; i<CurrResult; i++) {
-    namestring = Mid(results[i], InStr(results[i], searchString1)+Len(searchString1));
-    
-    if(unescapeName(Left(namestring, InStr(namestring, searchString3))) == compareString) {
-      if(mode == 1 || firstFound == -1) firstFound = int(Mid(Left(results[i], InStr(results[i], searchString5)), Len(searchString2)));
-      if(channelIDs[0] > 0) {
-        specialChannel = int(Mid(Left(results[i], InStr(results[i], searchString4)), InStr(results[i], searchString5)+Len(searchString5)));
-        
-        if(mode == 0 && specialChannel == channelIDs[0]) return int(Mid(Left(results[i], InStr(results[i], searchString5)), Len(searchString2)));
-        else if(mode == 1) {
-          if(specialChannel == channelIDs[0] || specialChannel == channelIDs[1] || specialChannel == channelIDs[2] ||
-            specialChannel == channelIDs[3] || specialChannel == channelIDs[4] || specialChannel == channelIDs[5]) {
-            return firstFound;
-          } else return -1;
-        }
-      } else if(mode == 1) return firstFound;
+  for(i=0; i<currResult; i++) {
+    namestring = Mid(results[i], InStr(results[i], "channel_name=")+Len("channel_name="));
+	if(InStr(namestring, " ") != -1) namestring = Left(namestring, InStr(namestring, " "));
+    if(unescapeName(namestring) == channelName) {
+	  outputLog(1, "Channel found in results entry "$i);
+	  // Get CID
+	  CIDString = Mid(results[i], InStr(results[i], "cid=")+Len("cid="));
+	  if(InStr(CIDString, " ") != -1) CIDString = Left(CIDString, InStr(CIDString, " "));
+	  return int(CIDString);
     }
   }
-  return firstFound;
+  return -1;
 }
 
 /***************************************************************************************************

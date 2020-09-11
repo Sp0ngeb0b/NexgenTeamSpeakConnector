@@ -1,7 +1,7 @@
 /*##################################################################################################
 ##
-##  Nexgen Teamspeak 3 Connector version 2.00
-##  Copyright (C) 2019 Patrick "Sp0ngeb0b" Peltzer
+##  Nexgen Teamspeak 3 Connector version 2.01
+##  Copyright (C) 2020 Patrick "Sp0ngeb0b" Peltzer
 ##
 ##  This program is free software; you can redistribute and/or modify
 ##  it under the terms of the Open Unreal Mod License version 1.1.
@@ -11,6 +11,9 @@
 ##################################################################################################*/
 /*##################################################################################################
 ##  Changelog:
+##
+##  Version 2.01:
+##  [Added]     - Teaspeak (teaspeak.de) server support
 ##
 ##  Version 2.00:
 ##  [Changed]   - Teamspeak query is now periodic instead of event driven
@@ -527,11 +530,11 @@ static function string formatCmdArgFixed(coerce string arg) {
 
 defaultproperties
 {
-     versionNum=200
+     versionNum=201
      extConfigClass=Class'NexgenTeamSpeakConnectorConfigExt'
      sysConfigClass=Class'NexgenTeamSpeakConnectorConfigSys'
      clientControllerClass=Class'NexgenTeamSpeakConnectorClient'
      pluginName="Nexgen TeamSpeak 3 Connector"
      pluginAuthor="Sp0ngeb0b"
-     pluginVersion="2.00"
+     pluginVersion="2.01"
 }
