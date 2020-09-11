@@ -8,10 +8,10 @@
 ####################################################################################################
 ##
 ##  Nexgen Teamspeak 3 Connector - NTSC
-##  [NexgenTeamSpeakConnector200 - For Nexgen 112]
+##  [NexgenTeamSpeakConnector201 - For Nexgen 112]
 ##
-##  Version: 2.00
-##  Release Date: December 2019
+##  Version: 2.01
+##  Release Date: September 2020
 ##  Author: Patrick "Sp0ngeb0b" Peltzer
 ##  Contact: spongebobut@yahoo.com  -  www.unrealriders.eu
 ##
@@ -37,7 +37,7 @@
 ##
 ####################################################################################################
 After more than 5 years and a break from UT, the Nexgen TeamSpeak 3 Connector (NTSC) got a complete 
-overhault - presenting version 200!
+overhault - presenting version 2!
 
 NTSC introduces a proper voice communication integration to UT99, using the 3rd party software
 Teamspeak 3. A serveradmin can use this plugin to connect his gameserver to a Teamspeak 3 server -
@@ -278,18 +278,18 @@ Multi channel mode, multiple gameserver, default channels are required:
 New install:
  1. Make sure your server has been shut down.
 
- 2. Copy NexgenTeamSpeakConnector200.u to the system folder of your UT server.
+ 2. Copy NexgenTeamSpeakConnector201.u to the system folder of your UT server.
 
- 3. If your server is using redirect upload the NexgenTeamSpeakConnector200.u.uz file
+ 3. If your server is using redirect upload the NexgenTeamSpeakConnector201.u.uz file
     to the redirect server.
 
  4. Open your servers configuration file and add the following server package:
 
-      ServerPackages=NexgenTeamSpeakConnector200
+      ServerPackages=NexgenTeamSpeakConnector201
 
     Also add the following server actors in the exact order:
 
-      ServerActors=NexgenTeamSpeakConnector200.NexgenTeamSpeakConnector
+      ServerActors=NexgenTeamSpeakConnector201.NexgenTeamSpeakConnector
       
     Note that the actors should be added AFTER the Nexgen controller server actor
     (ServerActors=Nexgen112.NexgenActor).
@@ -305,16 +305,16 @@ New install:
 Updating from a previous version:
  1. Make sure your server has been shut down.
 
- 2. Delete NexgenTeamSpeakConnector100.u from your servers system folder and upload 
-    NexgenTeamSpeakConnector200.u to the same folder.
+ 2. Delete NexgenTeamSpeakConnectorXXX.u from your servers system folder and upload 
+    NexgenTeamSpeakConnector201.u to the same folder.
 
- 3. If your server is using redirect you may wish to delete NexgenTeamSpeakConnector100.u.uz if 
-    it is no longer used by other servers. Also upload NexgenTeamSpeakConnector200.u.uz to the 
+ 3. If your server is using redirect you may wish to delete NexgenTeamSpeakConnectorXXX.u.uz if 
+    it is no longer used by other servers. Also upload NexgenTeamSpeakConnector201.u.uz to the 
     redirect server.
 
  4. Open NexgenTeamSpeakConnector.ini.
 
- 5. Do a search and replace "NexgenTeamSpeakConnector100." with "NexgenTeamSpeakConnector200." 
+ 5. Do a search and replace "NexgenTeamSpeakConnectorXXX." with "NexgenTeamSpeakConnector201." 
     (without the quotes).
 
  6. Save the changes and close the file.
@@ -322,9 +322,9 @@ Updating from a previous version:
  7. Goto the [Engine.GameEngine] section and edit the server package and
     server actor lines for Nexgen. They should look like this:
 
-      ServerActors=NexgenTeamSpeakConnector200.NexgenABMMain
+      ServerActors=NexgenTeamSpeakConnector201.NexgenTeamSpeakConnector
 
-      ServerPackages=NexgenTeamSpeakConnector200
+      ServerPackages=NexgenTeamSpeakConnector201
 
  8. Save changes to the servers configuration file and close it.
 
@@ -424,6 +424,10 @@ and solution can be found here: http://www.unrealadmin.org/forums/showthread.php
 ##  10. Changelog
 ##
 ####################################################################################################
+- Version 2.01:
+  [Added]     - Teaspeak (teaspeak.de) server support
+  [Fixed]     - Possible channel detection fail
+
 - Version 2.00:
   [Changed]   - Teamspeak query is now periodic instead of event driven
   [Added]     - Non-UT TS clients are now also displayed and considered for joins/leaves messages
@@ -443,7 +447,7 @@ Bug reports / feedback / questions / debugging requests can be send directly to 
 
 
 
-Sp0ngeb0b, December 2019
+Sp0ngeb0b, September 2020
 
 admin@unrealriders.eu / spongebobut@yahoo.com
 www.unrealriders.eu
